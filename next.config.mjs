@@ -1,12 +1,19 @@
+import createNextIntlPlugin from 'next-intl/plugin'
+
+const withNextIntl = createNextIntlPlugin('./i18n.ts')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-typescript: {
-    // ❌ Ignore TypeScript errors during builds
-    ignoreBuildErrors: true,
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
-};
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    domains: ['placeholder.svg'],
+    unoptimized: true,
+  },
+}
 
-export default nextConfig;
+export default withNextIntl(nextConfig)
