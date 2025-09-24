@@ -58,7 +58,7 @@ export function Header() {
             {/* <UserMenu /> */}
             {/* <CartButton /> */}
 
-            <p>Craft Studio <span>  EST. 2025</span></p>
+            <p onClick={() => setIsMenuOpen(true)}>Craft Studio <span >  EST. 2025</span></p>
 
             {/* Mobile Menu Button */}
             <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
