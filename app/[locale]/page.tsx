@@ -6,6 +6,7 @@ import { SimpleElegant } from "@/components/simple-elegant"
 import { WhyMinimal } from "@/components/why-minimal"
 import ShopByCategory from "@/components/categories-section"
 import ReviewSection from "@/components/reviewSection"
+export const dynamic = 'force-dynamic';
 
 export default function HomePage() {
   return (

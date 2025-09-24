@@ -7,7 +7,7 @@ import { getMessages } from "next-intl/server"
 import { Suspense } from "react"
 import { ReduxProvider } from "@/components/providers/redux-provider"
 import { AuthGuard } from "@/components/auth/auth-guard"
-import "../globals.css" // Fixed CSS import path to use correct relative path
+import "./globals.css" // Fixed CSS import path to use correct relative path
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],

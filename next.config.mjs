@@ -14,6 +14,15 @@ const nextConfig = {
     domains: ['placeholder.svg'],
     unoptimized: true,
   },
+  webpack: (config) => {
+   config.ignoreWarnings = [
+      {
+        // Ignore all warnings/errors for Radix UI missing modules
+        message: /Can't resolve '@radix-ui\/react-.+'/,
+      },
+    ]
+    return config
+  },
 }
 
 export default withNextIntl(nextConfig)
