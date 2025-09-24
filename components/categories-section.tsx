@@ -33,22 +33,22 @@ export default function ShopByCategory() {
     <div className="bg-[#f8f8f8] w-full h-full">
       <section className="container mx-auto h-full  py-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-18">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-10">
           <div className="text-center md:text-left">
             <h2 className=" text-[64px] text-center font-playfair">Shop by Category</h2>
-            <p className="text-gray-600 mt- font-sans text-[16px]">
+            <p className="text-gray-600  font-sans text-[16px]">
               Discover our wide range of categories with trending products.
             </p>
           </div>
 
           <div className="flex gap-3 mt-4 md:mt-0">
-            <button className="px-4 py-2 rounded-full bg-[#f8f8f8] hover:bg-gray-300">
+            <button className="px-4 py-2 rounded-full bg-[#f8f8f8] border border-white hover:bg-gray-300">
               Men
             </button>
-            <button className="px-4 py-2 rounded-full bg-[#f8f8f8] hover:bg-gray-300">
+            <button className="px-4 py-2 rounded-full bg-[#f8f8f8] border border-white hover:bg-gray-300">
               Women
             </button>
-            <button className="px-4 py-2 rounded-full bg-[#f8f8f8] hover:bg-gray-300">
+            <button className="px-4 py-2 rounded-full bg-[#f8f8f8] border border-white hover:bg-gray-300">
               Kids
             </button>
           </div>
