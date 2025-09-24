@@ -21,7 +21,7 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="container mx-auto px-4 flex justify-between gap-2 mt-30">
+      <div className="container mx-auto px-4 flex justify-between gap-2 mt-20">
         <div className="h-[117px] bg-[#F8F8F8] w-1/4 flex flex-col justify-center items-center rounded-3xl">
           <h1 className="text-[32px] font-sans">100+</h1>
           <p className="font-playfair text-[18px] text-[#5a5a5a]"><span className="text-[26px]">H</span>appy Customer</p>

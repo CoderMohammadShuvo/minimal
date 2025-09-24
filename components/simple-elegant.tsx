@@ -33,7 +33,7 @@ export function SimpleElegant() {
           alt="Left Bottom"
           width={253}
           height={213}
-          className="absolute top-[400px] left-1/8 -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-[400px] left-1/4 -translate-x-1/2 -translate-y-1/2"
         />
 
         {/* 3.svg - Right Bottom of 1.svg */}
@@ -42,7 +42,7 @@ export function SimpleElegant() {
           alt="Right Bottom"
           width={232}
           height={248}
-          className="absolute top-[400px] right-1/8 translate-x-1/2 -translate-y-1/2"
+          className="absolute top-[400px] right-1/4 translate-x-1/2 -translate-y-1/2"
         />
 
         {/* 4.svg - Bottom Center */}
@@ -73,7 +73,10 @@ export function SimpleElegant() {
         />
 
         <div>
-          <h1 className="text-center text-[64px] font-playfair ">Simple. <br /> Elegant. <br /> Timeless</h1>
+          <h1 className="text-center text-[64px] font-playfair leading-[1.1]">
+            Simple. <br /> Elegant. <br /> Timeless
+          </h1>
+
           <p className="text-center">Minimalist design meets handmade craftsmanship to <br /> elevate your space effortlessly.</p>
         </div>
       </div>
