@@ -63,7 +63,7 @@ export function RecentOrders() {
         <CardTitle>Recent Orders</CardTitle>
         <CardDescription>Latest orders from your customers</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-[40vh] overflow-scroll">
         <div className="space-y-4">
           {recentOrders.map((order) => (
             <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">

@@ -12,7 +12,7 @@ export default function AdminDashboard() {
 
       <StatsCards />
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 h-[50vh] overflow-hidden ">
         <SalesChart />
         <RecentOrders />
       </div>

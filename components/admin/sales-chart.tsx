@@ -15,7 +15,7 @@ const salesData = [
 
 export function SalesChart() {
   return (
-    <Card>
+    <Card className="">
       <CardHeader>
         <CardTitle>Sales Overview</CardTitle>
         <CardDescription>Monthly sales and order statistics</CardDescription>

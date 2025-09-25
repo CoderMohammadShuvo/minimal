@@ -12,34 +12,55 @@ export function WhyMinimal() {
   const t = useTranslations("whyminimal")
 
   return (
-    <section className="relative bg-white py-20 md:py-32">
-      <div className="container mx-auto px-4 flex-col items-center">
-        <h1 className="text-[64px] text-center font-playfair">Why Minimal?</h1>
-        <p className="text-center font-sans text-[16px]">Minimalist design meets handmade <br /> craftsmanship to elevate your space <br /> effortlessly.</p>
-      </div>
-      <div className="container mx-auto flex gap-4 mt-16">
-        <div className="h-[294px] w-1/3 border rounded-md p-10">
-          <RecycleIcon />
-          <ul className="list-disc pl-5">
-            <li className="font-sans text-[16px] mt-6">Sustainable</li>
-          </ul>
-          <p className="text-[32px] mt-6 font-playfair">We use recycled & eco-friendly materials.</p>
-        </div>
-        <div className="h-[294px] w-1/3 border rounded-md p-10 ">
-          <AffordableIcon />
-          <ul className="list-disc pl-5">
-            <li className="font-sans text-[16px] mt-6">Affordable</li>
-          </ul>
-          <p className="text-[32px] mt-6 font-playfair">Designed for quality without the high price.  </p>
-        </div>
-        <div className="h-[294px] w-1/3 border rounded-md p-10">
-          <TimelessIcon />
-          <ul className="list-disc pl-5">
-            <li className="font-sans text-[16px] mt-6">Timeless Design</li>
-          </ul>
-          <p className="text-[32px] mt-6 font-playfair">Simple forms that never go out of style.</p>
-        </div>
-      </div>
-    </section>
+   <section className="relative bg-white py-20 md:py-32">
+  {/* Heading */}
+  <div className="container mx-auto px-4 flex flex-col items-center text-center">
+    <h1 className="text-[36px] sm:text-[48px] lg:text-[64px] font-playfair">
+      Why Minimal?
+    </h1>
+    <p className="mt-4 font-sans text-[14px] sm:text-[16px] text-[#333]">
+      Minimalist design meets handmade <br className="hidden sm:block" />
+      craftsmanship to elevate your space <br className="hidden sm:block" />
+      effortlessly.
+    </p>
+  </div>
+
+  {/* Cards */}
+  <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 lg:mt-16 px-4">
+    {/* Card 1 */}
+    <div className="border rounded-md p-6 sm:p-8 lg:p-10 flex flex-col h-auto">
+      <RecycleIcon className="w-8 h-8 sm:w-10 sm:h-10" />
+      <ul className="list-disc pl-5 mt-4 sm:mt-6">
+        <li className="font-sans text-[14px] sm:text-[16px]">Sustainable</li>
+      </ul>
+      <p className="text-[20px] sm:text-[24px] lg:text-[32px] mt-4 sm:mt-6 font-playfair leading-snug">
+        We use recycled & eco-friendly materials.
+      </p>
+    </div>
+
+    {/* Card 2 */}
+    <div className="border rounded-md p-6 sm:p-8 lg:p-10 flex flex-col h-auto">
+      <AffordableIcon className="w-8 h-8 sm:w-10 sm:h-10" />
+      <ul className="list-disc pl-5 mt-4 sm:mt-6">
+        <li className="font-sans text-[14px] sm:text-[16px]">Affordable</li>
+      </ul>
+      <p className="text-[20px] sm:text-[24px] lg:text-[32px] mt-4 sm:mt-6 font-playfair leading-snug">
+        Designed for quality without the high price.
+      </p>
+    </div>
+
+    {/* Card 3 */}
+    <div className="border rounded-md p-6 sm:p-8 lg:p-10 flex flex-col h-auto">
+      <TimelessIcon className="w-8 h-8 sm:w-10 sm:h-10" />
+      <ul className="list-disc pl-5 mt-4 sm:mt-6">
+        <li className="font-sans text-[14px] sm:text-[16px]">Timeless Design</li>
+      </ul>
+      <p className="text-[20px] sm:text-[24px] lg:text-[32px] mt-4 sm:mt-6 font-playfair leading-snug">
+        Simple forms that never go out of style.
+      </p>
+    </div>
+  </div>
+</section>
+
   )
 }
