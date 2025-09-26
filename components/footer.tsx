@@ -32,7 +32,7 @@ export function Footer() {
             </div>
           </div>
 
-         <div className="flex justify-center gap-10 mt-4">
+         <div className="flex justify-between md:justify-center gap-10 mt-4">
            {/* Quick Links */}
           <div className="space-y-4">
             <div className="space-y-2">
@@ -96,13 +96,13 @@ export function Footer() {
           
         </div>
 
-        <div className=" mt-8 pt-8 flex justify-between items-center text-muted-foreground">
+        <div className=" mt-8 pt-8 flex flex-col lg:flex-row justify-between items-start text-muted-foreground">
             <div>
               <p className="font-sans text-[20px] ">01711244963</p>
               <h1 className="font-sans text-[24px] font-bold">minimalcrafts.art</h1>
             </div>
-            <p className="text-[12px]">&copy; 2024 Minimal. All rights reserved.</p>
-            <div className="flex gap-4 text-[12px]">
+            <p className="text-[12px] mt-8">&copy; 2024 Minimal. All rights reserved.</p>
+            <div className="flex gap-4 text-[12px] mt-8">
               <Link href="#">Cookies Policy</Link>
               <Link href="#">Terms of Use</Link>
               <Link href="#">Term of Service  </Link>

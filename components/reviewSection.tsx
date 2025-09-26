@@ -35,7 +35,7 @@ export default function ReviewSection() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-center  items-center mb-8">
         <div className="text-center md:text-left">
-          <h2 className="text-center text-[64px] font-playfair ">Enjoy our customer <br /> feedback</h2>
+          <h2 className="text-center text-[36px] sm:text-[48px] lg:text-[64px] font-playfair ">Enjoy our customer <br /> feedback</h2>
           <p className="text-gray-600 mt-2 text-center">
             This is valuable for us
           </p>

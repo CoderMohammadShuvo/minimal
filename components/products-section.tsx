@@ -45,7 +45,7 @@ const productsData = {
             id: 3, name: "Top Product 3", price: 333, featured: true,
             isPopular: false
         },
-       
+
     ],
     feature: [
         {
@@ -87,9 +87,9 @@ const ProductPageSection = () => {
     };
 
     return (
-        <div className="flex min-h-screen mb-10 container mx-auto mt-14 " >
+        <div className="flex flex-col lg:flex-row min-h-screen mb-10 container mx-auto mt-14">
             {/* Left Filter Section */}
-            <aside className="w-64 p-4 bg-white border border-gray-200 ">
+            <aside className="w-full lg:w-64 p-4 bg-white border border-gray-200 mb-6 lg:mb-0 lg:mr-6">
                 {filtersData.map((filter, idx) => (
                     <div key={idx} className="mb-3 border-b border-gray-200">
                         <button
@@ -116,34 +116,37 @@ const ProductPageSection = () => {
             </aside>
 
             {/* Right Products Section */}
-            <main className="flex-1 p-6 overflow-y-auto ml-6">
+            <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
                 {/* Top Products */}
-                <section className="mb-8 mt-[-50px] ">
-                    <h1 className="text-[64px] text-left font-playfair">Top Product</h1>
-                    <p className="text-left font-sans text-[16px] mt-6">Minimalist design meets handmade craftsmanship to elevate your space effortlessly.</p>
-                    <div className="grid grid-cols-3 gap-4 mt-10">
+                <section className="mb-8">
+                    <h1 className="text-3xl sm:text-4xl lg:text-[64px] text-left font-playfair">
+                        Top Product
+                    </h1>
+                    <p className="text-left font-sans text-[14px] sm:text-[16px] mt-4 sm:mt-6">
+                        Minimalist design meets handmade craftsmanship to elevate your space effortlessly.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                         {productsData.top.map((product) => (
                             <div key={product.id}>
                                 <Card className="relative">
-                                    {/* Badge */}
                                     {product?.isPopular && (
                                         <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-sm font-medium px-3 py-1 rounded-md">
                                             Popular
                                         </span>
                                     )}
-
                                     <Image
                                         aria-hidden
                                         src="/2.svg"
                                         alt="Globe icon"
                                         width={646}
                                         height={271}
-                                        className="rounded-md"
+                                        className="rounded-md w-full h-auto"
                                     />
                                 </Card>
-
-                                <h1 className="text-[24px] font-playfair mt-4">{product?.name}</h1>
-                                <h2 className="text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                                <h1 className="text-lg sm:text-xl lg:text-[24px] font-playfair mt-4">
+                                    {product?.name}
+                                </h1>
+                                <h2 className="text-base sm:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
                                     ${product?.price}
                                 </h2>
                             </div>
@@ -151,33 +154,36 @@ const ProductPageSection = () => {
                     </div>
                 </section>
 
-                {/* Feature Products */}
-               <section className="mb-16 mt-16">
-                    <h1 className="text-[64px] text-left font-playfair">Feature Product</h1>
-                    <p className="text-left font-sans text-[16px] mt-6">Minimalist design meets handmade craftsmanship to elevate your space effortlessly.</p>
-                    <div className="grid grid-cols-3 gap-4 mt-10">
+                {/* Repeat same responsive grid for other sections */}
+                <section className="mb-16">
+                    <h1 className="text-3xl sm:text-4xl lg:text-[64px] text-left font-playfair">
+                        Feature Product
+                    </h1>
+                    <p className="text-left font-sans text-[14px] sm:text-[16px] mt-4 sm:mt-6">
+                        Minimalist design meets handmade craftsmanship to elevate your space effortlessly.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                         {productsData.top.map((product) => (
                             <div key={product.id}>
                                 <Card className="relative">
-                                    {/* Badge */}
                                     {product?.isPopular && (
                                         <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-sm font-medium px-3 py-1 rounded-md">
                                             Popular
                                         </span>
                                     )}
-
                                     <Image
                                         aria-hidden
                                         src="/2.svg"
                                         alt="Globe icon"
                                         width={646}
                                         height={271}
-                                        className="rounded-md"
+                                        className="rounded-md w-full h-auto"
                                     />
                                 </Card>
-
-                                <h1 className="text-[24px] font-playfair mt-4">{product?.name}</h1>
-                                <h2 className="text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                                <h1 className="text-lg sm:text-xl lg:text-[24px] font-playfair mt-4">
+                                    {product?.name}
+                                </h1>
+                                <h2 className="text-base sm:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
                                     ${product?.price}
                                 </h2>
                             </div>
@@ -185,33 +191,36 @@ const ProductPageSection = () => {
                     </div>
                 </section>
 
-                {/* New Products */}
-                <section className="mb-8 ">
-                    <h1 className="text-[64px] text-left font-playfair">Home Decor</h1>
-                    <p className="text-left font-sans text-[16px] mt-6">Minimalist design meets handmade craftsmanship to elevate your space effortlessly.</p>
-                    <div className="grid grid-cols-3 gap-4 mt-10">
+                {/* Same for Home Decor */}
+                <section className="mb-8">
+                    <h1 className="text-3xl sm:text-4xl lg:text-[64px] text-left font-playfair">
+                        Home Decor
+                    </h1>
+                    <p className="text-left font-sans text-[14px] sm:text-[16px] mt-4 sm:mt-6">
+                        Minimalist design meets handmade craftsmanship to elevate your space effortlessly.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                         {productsData.top.map((product) => (
                             <div key={product.id}>
                                 <Card className="relative">
-                                    {/* Badge */}
                                     {product?.isPopular && (
                                         <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-sm font-medium px-3 py-1 rounded-md">
                                             Popular
                                         </span>
                                     )}
-
                                     <Image
                                         aria-hidden
                                         src="/2.svg"
                                         alt="Globe icon"
                                         width={646}
                                         height={271}
-                                        className="rounded-md"
+                                        className="rounded-md w-full h-auto"
                                     />
                                 </Card>
-
-                                <h1 className="text-[24px] font-playfair mt-4">{product?.name}</h1>
-                                <h2 className="text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                                <h1 className="text-lg sm:text-xl lg:text-[24px] font-playfair mt-4">
+                                    {product?.name}
+                                </h1>
+                                <h2 className="text-base sm:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
                                     ${product?.price}
                                 </h2>
                             </div>
@@ -220,6 +229,7 @@ const ProductPageSection = () => {
                 </section>
             </main>
         </div>
+
     );
 };
 

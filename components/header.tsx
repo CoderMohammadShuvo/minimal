@@ -20,48 +20,35 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border border-gray-100 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
-
-          <div className="flex gap-2 items-center">
-            <MenuIcon/>
+          {/* Left: Shop Button */}
+          <div
+            className="flex gap-2 items-center cursor-pointer md:cursor-default"
+            onClick={() => {
+              if (window.innerWidth < 1024) setIsMenuOpen(!isMenuOpen) // only toggle on mobile/tablet
+            }}
+          >
+            <MenuIcon />
             <p>SHOP</p>
           </div>
 
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <Logo/>
+            <Logo />
           </Link>
-
-          {/* Desktop Navigation */}
-          {/* <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
-              {t("home")}
-            </Link>
-            <Link href="/products" className="text-sm font-medium hover:text-primary transition-colors">
-              {t("products")}
-            </Link>
-            <Link href="/categories" className="text-sm font-medium hover:text-primary transition-colors">
-              {t("categories")}
-            </Link>
-            <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
-              {t("about")}
-            </Link>
-            <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors">
-              {t("contact")}
-            </Link>
-          </nav> */}
-
-         
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
-            {/* <LanguageSwitcher /> */}
-            {/* <UserMenu /> */}
-            {/* <CartButton /> */}
+            <p onClick={() => setIsMenuOpen(true)} className="hidden md:block">
+              Craft Studio <span> EST. 2025</span>
+            </p>
 
-            <p onClick={() => setIsMenuOpen(true)}>Craft Studio <span >  EST. 2025</span></p>
-
-            {/* Mobile Menu Button */}
-            <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {/* Mobile Menu Toggle (still here as fallback) */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
               {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
           </div>
@@ -98,5 +85,6 @@ export function Header() {
         )}
       </div>
     </header>
+
   )
 }

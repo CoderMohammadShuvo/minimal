@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import RightArrorwIcon from "./icons/RightArrorwIcon"
 
 export function HeroSection() {
   const t = useTranslations("hero")
@@ -11,7 +13,8 @@ export function HeroSection() {
   return (
     <section className="relative bg-white py-20 md:py-32">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row justify-between items-center text-center lg:text-left gap-10">
-        <h1 className="font-sans text-[32px] sm:text-[36px] lg:text-[40px] font-regular leading-snug">
+        <div>
+          <h1 className="font-sans text-[32px] sm:text-[36px] lg:text-[40px] font-regular leading-snug">
           Crafted{" "}
           <span className="text-[42px] sm:text-[52px] lg:text-[64px] font-playfair italic">
             Minimalism
@@ -23,9 +26,13 @@ export function HeroSection() {
           </span>{" "}
           Living
         </h1>
+        <Link href="/products">
+            <button className="px-4 mt-8 py-2 border border-[#dedede] rounded-md flex gap-4">Choice Your Product <RightArrorwIcon/></button>
+        </Link>
+        </div>
         <Image
           aria-hidden
-          src="/hero-img-1.svg"
+          src="/heroright.svg"
           alt="Globe icon"
           width={646}
           height={271}
