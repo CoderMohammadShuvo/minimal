@@ -8,6 +8,8 @@ import { ShoppingCart, Eye } from "lucide-react"
 import productImage from '../public/2.svg'
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { Product } from "@/lib/features/products/productsSlice"
 
 // Mock data - will be replaced with real data from database
 const featuredProducts = [
@@ -51,8 +53,47 @@ const featuredProducts = [
   },
 ]
 
+
+
 export function FeaturedProducts() {
   const t = useTranslations("products")
+
+
+  const [products, setProducts] = useState<Product[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  
+  
+    const fetchProducts = async () => {
+    try {
+      setIsLoading(true)
+      const response = await fetch("/api/products")
+      if (response.ok) {
+        const data = await response.json()
+
+        // ✅ Filter only "feature-product" category
+        const featured = data.products.filter(
+          (product: Product) => product.category?.slug === "feature-product"
+        )
+
+        setProducts(featured)
+      }
+    } catch (error) {
+      console.error("Failed to fetch products:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
+
+  console.log("product", products)
+
 
   return (
     <section className="py-12 md:py-16">
@@ -67,35 +108,35 @@ export function FeaturedProducts() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 md:mt-16">
-          {featuredProducts.map((product) => (
+          {products.map((product) => (
             <Link href="/products/1">
 
               <div key={product.id} className="flex flex-col items-start text-left">
-              <Card className="relative w-full">
-                {/* Badge */}
-                {product?.isPopular && (
-                  <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-md">
-                    Popular
-                  </span>
-                )}
+                <Card className="relative w-full border-none">
+                  {/* Badge */}
+                  {product?.isPopular && (
+                    <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-md">
+                      Popular
+                    </span>
+                  )}
 
-                <Image
-                  aria-hidden
-                  src="/2.svg"
-                  alt="Globe icon"
-                  width={646}
-                  height={271}
-                  className="rounded-md w-full object-cover"
-                />
-              </Card>
+                  <Image
+                    aria-hidden
+                    src={product?.images[0]}
+                    alt="Globe icon"
+                    width={646}
+                    height={271}
+                    className="rounded-md w-full object-cover"
+                  />
+                </Card>
 
-              <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
-                {product?.name}
-              </h1>
-              <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
-                ${product?.price}
-              </h2>
-            </div>
+                <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
+                  {product?.name}
+                </h1>
+                <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                  ${product?.price}
+                </h2>
+              </div>
             </Link>
           ))}
         </div>

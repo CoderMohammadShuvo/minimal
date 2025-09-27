@@ -110,21 +110,42 @@ export function ProductForm({ product, onSubmit, onCancel, isLoading }: ProductF
     }
   }
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files) {
-      // In a real app, you would upload these to a cloud storage service
-      // For now, we'll use placeholder URLs
-      const newImages = Array.from(files).map(
-        (file, index) => `/placeholder.svg?height=300&width=300&text=${file.name}`,
-      )
-      setImages([...images, ...newImages])
-    }
-  }
+const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const files = e.target.files
+  if (!files) return
 
-  const removeImage = (index: number) => {
-    setImages(images.filter((_, i) => i !== index))
-  }
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  const uploadPreset = "minimal_presite" // 👈 use the preset name you set in dashboard
+
+  const uploadPromises = Array.from(files).map(async (file) => {
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("upload_preset", uploadPreset)
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+
+    const data = await res.json()
+    if (data.error) {
+      throw new Error(data.error.message)
+    }
+    return data.secure_url as string
+  })
+
+  const uploadedUrls = await Promise.all(uploadPromises)
+  setImages((prev) => [...prev, ...uploadedUrls])
+}
+
+
+const removeImage = (index: number) => {
+  setImages((prev) => prev.filter((_, i) => i !== index))
+}
+
 
   const handleFormSubmit = async (data: ProductFormData) => {
     if (images.length === 0) {
