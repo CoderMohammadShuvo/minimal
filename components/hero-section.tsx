@@ -30,12 +30,11 @@ export function HeroSection() {
             <button className="px-4 mt-8 py-2 border border-[#dedede] rounded-md flex gap-4">Choice Your Product <RightArrorwIcon/></button>
         </Link>
         </div>
-        <Image
+        <img
           aria-hidden
           src="/heroright.svg"
           alt="Globe icon"
-          width={646}
-          height={271}
+          
           className="w-full max-w-[400px] sm:max-w-[500px] lg:max-w-[646px] h-auto"
         />
       </div>

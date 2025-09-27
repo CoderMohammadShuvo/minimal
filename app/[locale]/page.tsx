@@ -27,12 +27,11 @@ export default function HomePage() {
             Minimalist design meets handmade craftsmanship to elevate your space <br /> effortlessly.
           </p>
 
-          <Image
+          <img
             aria-hidden
             src="/hero-img-1.svg"
             alt="Globe icon"
-            width={1920}
-            height={1080}
+            
             className="w-full h-auto rounded-md mt-8"
           />
         </div>

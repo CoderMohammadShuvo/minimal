@@ -21,61 +21,54 @@ export function SimpleElegant() {
    <section className="py-16 h-[1200px] bg-[#f8f8f8]">
   <div className="container h-full relative flex justify-center items-center mx-auto px-4 ">
     {/* 1.svg - Center Top */}
-    <Image
+    <img
       src="/1.svg"
       alt="Center Icon"
-      width={331}
-      height={282}
       className="absolute top-20 left-1/2 -translate-x-1/2 
                  w-[200px] md:w-[260px] lg:w-[331px]"
     />
 
     {/* 2.svg - Left Bottom of 1.svg */}
-    <Image
+    <img
       src="/2.svg"
       alt="Left Bottom"
-      width={253}
-      height={213}
+    
       className="absolute top-[400px] left-1/4 -translate-x-1/2 -translate-y-1/2 
                  w-[140px] md:w-[200px] lg:w-[253px]"
     />
 
     {/* 3.svg - Right Bottom of 1.svg */}
-    <Image
+    <img
       src="/1.svg"
       alt="Right Bottom"
-      width={232}
-      height={248}
+    
       className="absolute top-[400px] right-1/4 translate-x-1/2 -translate-y-1/2
                  w-[130px] md:w-[180px] lg:w-[232px]"
     />
 
     {/* 4.svg - Bottom Center */}
-    <Image
+    <img
       src="/5.svg"
       alt="Bottom Center"
-      width={425}
-      height={316}
+   
       className="absolute bottom-[150px] left-[80px] -translate-x-1/2 
                  w-[220px] md:w-[300px] lg:w-[425px]"
     />
 
     {/* 5.svg - Left Center */}
-    <Image
+    <img
       src="/4.svg"
       alt="Left Center"
-      width={150}
-      height={150}
+      
       className="absolute top-[800px] right-0 -translate-y-1/2 
                  w-[80px] md:w-[120px] lg:w-[150px]"
     />
 
     {/* 6.svg - Right Center */}
-    <Image
+    <img
       src="/6.svg"
       alt="Right Center"
-      width={366}
-      height={317}
+    
       className="absolute top-[900px] left-1/2 -translate-y-1/2 
                  w-[200px] md:w-[280px] lg:w-[366px]"
     />
