@@ -42,9 +42,7 @@ export default async function RootLayout({
       <body className={`font-sans ${playfairDisplay.variable} ${sourceSans.variable}`}>
         <ReduxProvider>
           <AuthGuard>
-            <Suspense fallback="Loading...">
               <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
-            </Suspense>
           </AuthGuard>
         </ReduxProvider>
         <Analytics />

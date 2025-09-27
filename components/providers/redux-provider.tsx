@@ -9,9 +9,10 @@ import { store, persistor } from "@/lib/store"
 export function ReduxProvider({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+      <PersistGate  persistor={persistor}>
         {children}
       </PersistGate>
     </Provider>
   )
 }
+// loading={<div>Loading...</div>}
