@@ -17,7 +17,12 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 }
 
 export function generateToken(payload: JWTPayload): string {
-  return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: "7d" })
+  const secret = process.env.JWT_SECRET
+  if (!secret) {
+    throw new Error("JWT_SECRET is not defined in environment variables")
+  }
+
+  return jwt.sign(payload, secret, { expiresIn: "7d" })
 }
 
 export function verifyToken(token: string): JWTPayload | null {
