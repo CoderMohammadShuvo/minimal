@@ -5,7 +5,7 @@ import Image from "next/image";
 import DotIcon from "./icons/dot-icon";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const ProductDetails = () => {
+const ProductDetails = ({ productId, productData }: any) => {
     const images = [
         "/2.svg",
         "/4.svg",
@@ -28,7 +28,9 @@ const ProductDetails = () => {
 
     ];
 
-    const [activeImage, setActiveImage] = useState(images[0]);
+    console.log("productData", productData);
+
+    const [activeImage, setActiveImage] = useState(productData?.images[0]);
 
     const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
@@ -42,24 +44,23 @@ const ProductDetails = () => {
             <div className="flex flex-col lg:flex-row gap-6 items-stretch">
                 {/* Left: Active Image */}
                 <div className="w-full lg:w-[80%]">
-                    <div className="h-[500px] lg:h-[600px]">
-                        <Image
+                    <div className="h-[500px] lg:h-[700px]">
+                        <img
                             src={activeImage}
                             alt="Active product image"
-                            width={1000}
-                            height={600}
-                            className="rounded-lg w-full h-full object-cover border"
+
+                            className="rounded-lg w-full h-full object-cover s"
                         />
                     </div>
                 </div>
 
                 {/* Right: Thumbnail Images */}
                 <div className="flex lg:flex-col gap-4 w-full lg:w-[20%]">
-                    {images.map((img, idx) => (
+                    {productData?.images.map((img, idx) => (
                         <button
                             key={idx}
                             onClick={() => setActiveImage(img)}
-                            className={`relative border rounded-lg overflow-hidden focus:outline-none flex-1 ${activeImage === img ? "ring-2 ring-black" : ""
+                            className={`relative border-none max-h-[200px] rounded-lg overflow-hidden focus:outline-none flex-1 ${activeImage === img ? "ring-2 ring-black" : ""
                                 }`}
                         >
                             <Image
@@ -103,7 +104,7 @@ const ProductDetails = () => {
 
 
             {/* Delivery Options Section */}
-            <div className="py-10 px-6 md:px-14 border rounded-2xl border-[#dedede] mt-10 flex flex-col md:flex-row gap-6 md:gap-0">
+            <div className="py-10 px-6 md:px-14  rounded-2xl  mt-10 flex flex-col md:flex-row gap-6 md:gap-0">
                 <div className="border-b md:border-b-0 md:border-r border-[#dedede] pb-4 md:pb-0 md:pr-10 flex flex-col pl-4">
                     <span className="flex gap-2 md:gap-4 items-center font-playfair text-[12px]"><DotIcon /> Delivery Options</span>
                     <h1 className="font-sans mt-2 md:mt-6 text-[14px] md:text-[16px]">Dhaka,Dhaka - South,Dhanmondi 15</h1>
@@ -128,43 +129,73 @@ const ProductDetails = () => {
             {/* Product Description Section */}
             <div className="container mx-auto mt-10 flex flex-col md:flex-row gap-6 px-4 md:px-0">
                 <h1 className="w-full md:w-2/5 font-playfair text-[24px] sm:text-[28px] md:text-[32px]">
-                    Aladin Lamp / Prodip Showpiece Magic Lamp/ Classic Metal Carved Aladdin Lamp Light Wishing Tea Oil Pot and jewelry box
+                    {productData?.name}
                 </h1>
                 <span className="w-full md:w-3/5 font-sans text-[16px] sm:text-[18px] md:text-[20px] text-gray-400">
-                    Living for the mind implies access to good, thought-provoking books and time to read them, opportunity for travel, for intellectual activities, for observation and analysis, for appreciating works of art, music and beauty. The human mind requires freedom to think creatively and manifest his dreams into reality.
+                    {productData?.description}
                 </span>
             </div>
 
 
 
             <aside className="w-full mt-10">
-                {filtersData.map((filter, idx) => (
-                    <div key={idx} className="mb-4 bg-[#fbfbff] py-4 px-8 ">
-                        <button
-                            className="w-full flex justify-between items-center py-2 font-sans text-[20px] font-playfair text-gray-700"
-                            onClick={() => toggleAccordion(idx)}
-                        >
-                            {filter.title}
-                            <span>{openAccordion === idx ? <ChevronUp /> : <ChevronDown />}</span>
-                        </button>
-                        <div className="bg-[#f5f5f5]">
-                            {openAccordion === idx && (
+                <div key={1} className="mb-4 bg-[#fbfbff] py-4 px-8 ">
+                    <button
+                        className="w-full flex justify-between items-center py-2 font-sans text-[20px] font-playfair text-gray-700"
+                        onClick={() => toggleAccordion(1)}
+                    >
+                        Specifications
+                        <span>{openAccordion === 1 ? <ChevronUp /> : <ChevronDown />}</span>
+                    </button>
+                    <div className="bg-[#f5f5f5]">
+                        {openAccordion === 1 && (
                             <ul className="pl-4 pb-2">
-                                {filter.options.map((opt, i) => (
-                                    <li key={i} className="py-1 text-gray-600">
-                                        
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing.
-                                    </li>
-                                ))}
+
+                                <li key={1} className="py-1 text-gray-600">
+
+                                    {productData?.description}
+                                </li>
                             </ul>
                         )}
+                    </div>
+                </div>
+            </aside>
+
+            <aside className="w-full mt-10">
+                <div key={1} className="mb-4 bg-[#fbfbff] py-4 px-8 ">
+                    <button
+                        className="w-full flex justify-between items-center py-2 font-sans text-[20px] font-playfair text-gray-700"
+                        onClick={() => toggleAccordion(1)}
+                    >
+                        Specifications Details
+                        <span>{openAccordion === 1 ? <ChevronUp /> : <ChevronDown />}</span>
+                    </button>
+                    <div className="bg-[#f5f5f5] flex gap-4 p-4">
+                        <div className="p-4 border border-[#dedede] bg-white flex flex-col w-1/3">
+                            <span className="text-[12px]">Brand</span>
+                            <span className="text-[18px]">Minimal Craft</span>
+                        </div>
+                        <div className="p-4 border border-[#dedede] bg-white flex flex-col w-1/3">
+                            <span className="text-[12px]">SKU</span>
+                            <span className="text-[18px]">{productData?.sku}</span>
+                        </div>
+                        <div className="p-4 border border-[#dedede] bg-white flex flex-col w-1/3">
+                            <span className="text-[12px]">Material</span>
+                            <span className="text-[18px]">Handmade</span>
                         </div>
                     </div>
-                ))}
+                </div>
             </aside>
 
 
-            
+            <div className="w-full flex justify-center mt-12">
+                <button
+                    onClick={() => window.location.href = `/checkout?productId=${productData?.id}`}
+                    className="bg-black text-white px-8 py-3 rounded-2xl font-sans text-[18px] hover:bg-gray-800 transition"
+                >
+                    Order Now
+                </button>
+            </div>
 
         </section>
     );

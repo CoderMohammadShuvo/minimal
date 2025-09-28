@@ -69,16 +69,17 @@ model Product {
 
 model Order {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
-  orderNumber     String      @unique
+  orderNumber     String?      @unique
   userId          String      @db.ObjectId
   status          OrderStatus @default(PENDING)
-  totalAmount     Float
-  shippingAmount  Float       @default(0)
-  taxAmount       Float       @default(0)
+  totalAmount     Float?
+  shippingAmount  Float?       @default(0)
+  taxAmount       Float?       @default(0)
   paymentStatus   PaymentStatus @default(PENDING)
   paymentMethod   String?
-  shippingAddress Json
+  shippingAddress String
   billingAddress  Json?
+  notes  String?
   deliveryPartnerId String?   @db.ObjectId
   trackingNumber  String?
   estimatedDelivery DateTime?

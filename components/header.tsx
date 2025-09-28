@@ -45,14 +45,15 @@
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* Login Button */}
-              <Button
+              {/* <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setIsLoginOpen(true)}
                 className="hidden md:block"
               >
                 Login
-              </Button>
+              </Button> */}
+              <UserMenu/>
 
               {/* Mobile Menu Toggle */}
               <Button

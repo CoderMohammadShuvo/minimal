@@ -11,7 +11,7 @@ const reviews = Array.from({ length: 8 }).map((_, i) => ({
   image: "/avatar.svg",
 }));
 
-export default function ReviewSection() {
+export default function ReviewSection({productId}: any) {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerRow = 4;
 

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/tool
 
 export interface Order {
   id: string
-  orderNumber: string
+  orderNumber?: string
   userId: string
   status: "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "REFUNDED"
   totalAmount: number

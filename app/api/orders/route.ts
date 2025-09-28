@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { items, shippingAddressId, paymentMethod, notes } = body
+    const { items, shippingAddress, paymentMethod, notes } = body
 
     // Calculate total amount
     const productIds = items.map((item: any) => item.productId)
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
         paymentMethod,
         paymentStatus: "PENDING",
         notes,
-        shippingAddressId,
+        shippingAddress,
         items: {
           create: orderItems,
         },
@@ -108,7 +108,6 @@ export async function POST(request: NextRequest) {
             product: true,
           },
         },
-        shippingAddress: true,
       },
     })
 

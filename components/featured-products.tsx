@@ -109,7 +109,7 @@ export function FeaturedProducts() {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 md:mt-16">
           {products.map((product) => (
-            <Link href="/products/1">
+            <Link href={`/products/${product?.id}`}>
 
               <div key={product.id} className="flex flex-col items-start text-left">
                 <Card className="relative w-full border-none">
