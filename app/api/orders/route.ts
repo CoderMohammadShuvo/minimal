@@ -74,10 +74,14 @@ export async function POST(request: NextRequest) {
       }
     })
 
+    const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+
     const order = await prisma.order.create({
       data: {
         userId: user.id,
         totalAmount,
+        orderNumber,
         status: "PENDING",
         paymentMethod,
         paymentStatus: "PENDING",
