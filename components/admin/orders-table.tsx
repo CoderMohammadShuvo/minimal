@@ -50,7 +50,7 @@ export function OrdersTable() {
         ...(statusFilter !== "all" && { status: statusFilter }), // Updated condition to exclude 'all' from params
       })
 
-      const response = await fetch(`/api/orders?${params}`)
+      const response = await fetch(`/api/orders`)
       const data = await response.json()
 
       if (response.ok) {
@@ -67,6 +67,9 @@ export function OrdersTable() {
   useEffect(() => {
     fetchOrders()
   }, [currentPage, statusFilter])
+
+
+  console.log("orders", orders);
 
   const getStatusBadge = (status: string) => {
     const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {

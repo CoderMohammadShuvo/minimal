@@ -21,27 +21,12 @@ export async function GET(request: NextRequest) {
     }
 
     const orders = await prisma.order.findMany({
-      where,
-      include: {
-        user: {
-          select: { id: true, name: true, email: true },
-        },
-        items: {
-          include: {
-            product: {
-              select: { id: true, name: true, nameEn: true, nameBn: true, images: true, price: true },
-            },
-          },
-        },
-        shippingAddress: true,
-        deliveryPartner: true,
-      },
-      orderBy: { createdAt: "desc" },
-      skip: (page - 1) * limit,
-      take: limit,
+     include:{
+      user: true
+     }
     })
 
-    const total = await prisma.order.count({ where })
+    const total = await prisma.order.count({  })
 
     return NextResponse.json({
       orders,
@@ -102,13 +87,7 @@ export async function POST(request: NextRequest) {
           create: orderItems,
         },
       },
-      include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
-      },
+      
     })
 
     return NextResponse.json(order, { status: 201 })

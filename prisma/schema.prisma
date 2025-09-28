@@ -79,6 +79,7 @@ model Order {
   paymentMethod   String?
   shippingAddress String
   billingAddress  Json?
+  items  Json?
   notes  String?
   deliveryPartnerId String?   @db.ObjectId
   trackingNumber  String?
