@@ -56,14 +56,14 @@
               <UserMenu/>
 
               {/* Mobile Menu Toggle */}
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="sm"
                 className="md:hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-              </Button>
+              </Button> */}
             </div>
           </div>
 
