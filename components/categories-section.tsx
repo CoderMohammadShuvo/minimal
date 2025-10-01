@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Card } from "./ui/card";
 
 export default function ShopByCategory() {
   const [products, setProducts] = useState<any[]>([]);
@@ -73,8 +74,8 @@ export default function ShopByCategory() {
                 key={cat}
                 onClick={() => setCategory(cat)}
                 className={`px-4 py-2 rounded-full ${category === cat
-                    ? "bg-black text-white"
-                    : "bg-[#f8f8f8] border border-white hover:bg-gray-300"
+                  ? "bg-black text-white"
+                  : "bg-[#f8f8f8] border border-white hover:bg-gray-300"
                   } text-sm md:text-base`}
               >
                 {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -115,31 +116,32 @@ export default function ShopByCategory() {
               {visibleProducts.map((product) => (
                 <Link href={`/products/${product?.id}`}>
 
-                  <div
-                  key={product.id}
-                  className="rounded-lg flex flex-col items-center md:items-start text-center md:text-left"
-                >
-                  {product.images.length > 0 ? (
+                  <div key={product.id} className="flex flex-col items-start text-left">
+                    <Card className="relative w-full border-none max-h-[400px] ">
+                      {/* Badge */}
+                      {product?.isPopular && (
+                        <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-md">
+                          Popular
+                        </span>
+                      )}
 
-                    <img
-                      aria-hidden
-                      src={product?.images[0]}
-                      alt="Globe icon"
-                     
-                      className="rounded-md w-full h-[350px] object-fit"
-                    />
-                  ) : (
-                    <div className="w-full h-56 flex items-center justify-center rounded-md bg-gray-100 text-gray-400">
-                      <ImageIcon className="w-12 h-12" />
-                    </div>
-                  )}
-                  <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
-                    {product.name}
-                  </h1>
-                  <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
-                    ${product.price}
-                  </h2>
-                </div>
+                      <Image
+                        aria-hidden
+                        src={product?.images[0]}
+                        alt="Globe icon"
+                        width={646}
+                        height={271}
+                        className="rounded-md w-full object-cover"
+                      />
+                    </Card>
+
+                    <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
+                      {product?.name}
+                    </h1>
+                    <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                      ${product?.price}
+                    </h2>
+                  </div>
                 </Link>
               ))}
             </div>

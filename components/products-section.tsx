@@ -1,8 +1,10 @@
 "use client"
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, ShoppingCart, Filter, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Card } from "./ui/card";
 import Image from "next/image";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface Product {
     id: number;
@@ -20,6 +22,11 @@ interface Product {
     decoration?: string;
     images: string[];
     createdAt: string;
+}
+
+interface CartItem {
+    product: Product;
+    quantity: number;
 }
 
 const filtersData = [
@@ -122,6 +129,9 @@ const ProductPageSection = () => {
         feature: 1,
         new: 1
     });
+    const [cart, setCart] = useState<CartItem[]>([]);
+    const [addingToCart, setAddingToCart] = useState<number | null>(null);
+    const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
     const ITEMS_PER_PAGE = 3;
 
@@ -147,7 +157,17 @@ const ProductPageSection = () => {
 
     useEffect(() => {
         fetchProducts();
+        // Load cart from localStorage
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
     }, []);
+
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
 
     // Handle filter changes
     const handleFilterChange = (filterKey: keyof FilterState, value: string | number) => {
@@ -169,6 +189,36 @@ const ProductPageSection = () => {
         });
         // Reset pagination when filters change
         setPagination({ top: 1, feature: 1, new: 1 });
+    };
+
+    // Add to cart function
+    const addToCart = async (product: Product) => {
+        setAddingToCart(product.id);
+
+        try {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            setCart(prevCart => {
+                const existingItem = prevCart.find(item => item.product.id === product.id);
+
+                if (existingItem) {
+                    // If item already exists, increase quantity
+                    return prevCart.map(item =>
+                        item.product.id === product.id
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    );
+                } else {
+                    // If item doesn't exist, add new item
+                    return [...prevCart, { product, quantity: 1 }];
+                }
+            });
+        } catch (error) {
+            console.error("Failed to add item to cart:", error);
+        } finally {
+            setAddingToCart(null);
+        }
     };
 
     // Filter products based on selected filters
@@ -292,8 +342,88 @@ const ProductPageSection = () => {
 
     return (
         <div className="flex flex-col lg:flex-row min-h-screen mb-10 container mx-auto mt-14">
-            {/* Left Filter Section */}
-            <aside className="w-full lg:w-64 p-4 bg-white border border-gray-200 mb-6 lg:mb-0 lg:mr-6">
+            {/* Mobile Filter Toggle Button */}
+            <div className="lg:hidden fixed bottom-6 right-6 z-40">
+                <Button
+                    onClick={() => setMobileFilterOpen(true)}
+                    className="bg-black text-white rounded-full p-4 shadow-lg hover:bg-gray-800"
+                >
+                    <Filter size={20} />
+                </Button>
+            </div>
+
+            {/* Mobile Filter Popup */}
+            {mobileFilterOpen && (
+                <div className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col">
+                        {/* Header */}
+                        <div className="flex justify-between items-center p-4 border-b">
+                            <h2 className="text-lg font-semibold">Filters</h2>
+                            <div className="flex items-center gap-2">
+                                {isAnyFilterActive && (
+                                    <button
+                                        onClick={clearAllFilters}
+                                        className="text-sm text-blue-600 hover:text-blue-800"
+                                    >
+                                        Clear all
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => setMobileFilterOpen(false)}
+                                    className="p-1 hover:bg-gray-100 rounded"
+                                >
+                                    <X size={20} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Filter Content */}
+                        <div className="flex-1 overflow-y-auto p-4">
+                            {filtersData.map((filter, idx) => (
+                                <div key={idx} className="mb-3 border-b border-gray-200">
+                                    <button
+                                        className="w-full flex justify-between items-center py-2 font-sans text-gray-700 hover:text-gray-900"
+                                        onClick={() => toggleAccordion(idx)}
+                                    >
+                                        {filter.title}
+                                        <span>{openAccordion === idx ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
+                                    </button>
+                                    {openAccordion === idx && (
+                                        <ul className="pl-4 pb-2">
+                                            {filter.options.map((opt, i) => (
+                                                <li key={i} className="py-1 text-gray-600">
+                                                    <label className="flex items-center gap-2 cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={(filters[filter.key as keyof FilterState] as (string | number)[]).includes(opt.value)}
+                                                            onChange={() => handleFilterChange(filter.key as keyof FilterState, opt.value)}
+                                                            className="rounded border-gray-300"
+                                                        />
+                                                        {opt.label}
+                                                    </label>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Footer */}
+                        <div className="p-4 border-t">
+                            <Button
+                                onClick={() => setMobileFilterOpen(false)}
+                                className="w-full bg-black text-white hover:bg-gray-800"
+                            >
+                                Apply Filters
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Left Filter Section - Desktop */}
+            <aside className="hidden lg:block w-full lg:w-64 p-4 bg-white border border-gray-200 mb-6 lg:mb-0 lg:mr-6">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold">Filters</h2>
                     {isAnyFilterActive && (
@@ -349,31 +479,32 @@ const ProductPageSection = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                         {getPaginatedProducts(filteredCategorizedProducts.top, 'top').length > 0 ? (
                             getPaginatedProducts(filteredCategorizedProducts.top, 'top').map((product) => (
-                                <div key={product.id} className="flex flex-col">
-                                    <Card className="relative flex-1">
-                                        {product?.isPopular && (
-                                            <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-sm font-medium px-3 py-1 rounded-md z-10">
-                                                Popular
-                                            </span>
-                                        )}
-                                        <div className="relative w-full h-64 sm:h-72 lg:h-80 overflow-hidden rounded-md">
-                                            <Image
-                                                src={product?.images?.[0] || "/placeholder-image.jpg"}
-                                                alt={product.name}
-                                                fill
-                                                className="object-cover hover:scale-105 transition-transform duration-300"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            />
+                                <div key={product.id} className="flex flex-col group">
+                                    <Link href={`/products/${product?.id}`}>
+                                        <div className="flex flex-col items-start text-left">
+                                            <Card className="relative w-full border-none max-h-[400px]">
+                                                {product?.isPopular && (
+                                                    <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-md">
+                                                        Popular
+                                                    </span>
+                                                )}
+                                                <Image
+                                                    aria-hidden
+                                                    src={product?.images[0]}
+                                                    alt={product.name}
+                                                    width={646}
+                                                    height={271}
+                                                    className="rounded-md w-full object-cover"
+                                                />
+                                            </Card>
+                                            <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
+                                                {product?.name}
+                                            </h1>
+                                            <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                                                ${product?.price}
+                                            </h2>
                                         </div>
-                                    </Card>
-                                    <div className="mt-4 flex-1">
-                                        <h1 className="text-lg sm:text-xl lg:text-[24px] font-playfair line-clamp-2">
-                                            {product?.name}
-                                        </h1>
-                                        <h2 className="text-base sm:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
-                                            ${product?.price}
-                                        </h2>
-                                    </div>
+                                    </Link>
                                 </div>
                             ))
                         ) : (
@@ -382,7 +513,7 @@ const ProductPageSection = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     {/* Pagination for Top Products */}
                     {getTotalPages(filteredCategorizedProducts.top) > 1 && (
                         <div className="flex justify-center items-center space-x-2 mt-8">
@@ -418,31 +549,32 @@ const ProductPageSection = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                         {getPaginatedProducts(filteredCategorizedProducts.feature, 'feature').length > 0 ? (
                             getPaginatedProducts(filteredCategorizedProducts.feature, 'feature').map((product) => (
-                                <div key={product.id} className="flex flex-col">
-                                    <Card className="relative flex-1">
-                                        {product?.isPopular && (
-                                            <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-sm font-medium px-3 py-1 rounded-md z-10">
-                                                Popular
-                                            </span>
-                                        )}
-                                        <div className="relative w-full h-64 sm:h-72 lg:h-80 overflow-hidden rounded-md">
-                                            <Image
-                                                src={product?.images?.[0] || "/placeholder-image.jpg"}
-                                                alt={product.name}
-                                                fill
-                                                className="object-cover hover:scale-105 transition-transform duration-300"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            />
+                                <div key={product.id} className="flex flex-col group">
+                                    <Link href={`/products/${product?.id}`}>
+                                        <div className="flex flex-col items-start text-left">
+                                            <Card className="relative w-full border-none max-h-[400px]">
+                                                {product?.isPopular && (
+                                                    <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-md">
+                                                        Popular
+                                                    </span>
+                                                )}
+                                                <Image
+                                                    aria-hidden
+                                                    src={product?.images[0]}
+                                                    alt={product.name}
+                                                    width={646}
+                                                    height={271}
+                                                    className="rounded-md w-full object-cover"
+                                                />
+                                            </Card>
+                                            <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
+                                                {product?.name}
+                                            </h1>
+                                            <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                                                ${product?.price}
+                                            </h2>
                                         </div>
-                                    </Card>
-                                    <div className="mt-4 flex-1">
-                                        <h1 className="text-lg sm:text-xl lg:text-[24px] font-playfair line-clamp-2">
-                                            {product?.name}
-                                        </h1>
-                                        <h2 className="text-base sm:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
-                                            ${product?.price}
-                                        </h2>
-                                    </div>
+                                    </Link>
                                 </div>
                             ))
                         ) : (
@@ -451,7 +583,7 @@ const ProductPageSection = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     {/* Pagination for Feature Products */}
                     {getTotalPages(filteredCategorizedProducts.feature) > 1 && (
                         <div className="flex justify-center items-center space-x-2 mt-8">
@@ -487,31 +619,32 @@ const ProductPageSection = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                         {getPaginatedProducts(filteredCategorizedProducts.new, 'new').length > 0 ? (
                             getPaginatedProducts(filteredCategorizedProducts.new, 'new').map((product) => (
-                                <div key={product.id} className="flex flex-col">
-                                    <Card className="relative flex-1">
-                                        {product?.isPopular && (
-                                            <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-sm font-medium px-3 py-1 rounded-md z-10">
-                                                Popular
-                                            </span>
-                                        )}
-                                        <div className="relative w-full h-64 sm:h-72 lg:h-80 overflow-hidden rounded-md">
-                                            <Image
-                                                src={product?.images?.[0] || "/placeholder-image.jpg"}
-                                                alt={product.name}
-                                                fill
-                                                className="object-cover hover:scale-105 transition-transform duration-300"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            />
+                                <div key={product.id} className="flex flex-col group">
+                                    <Link href={`/products/${product?.id}`}>
+                                        <div className="flex flex-col items-start text-left">
+                                            <Card className="relative w-full border-none max-h-[400px]">
+                                                {product?.isPopular && (
+                                                    <span className="absolute top-2 right-2 bg-[#f8f8f8] text-gray-700 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-md">
+                                                        Popular
+                                                    </span>
+                                                )}
+                                                <Image
+                                                    aria-hidden
+                                                    src={product?.images[0]}
+                                                    alt={product.name}
+                                                    width={646}
+                                                    height={271}
+                                                    className="rounded-md w-full object-cover"
+                                                />
+                                            </Card>
+                                            <h1 className="text-lg md:text-xl lg:text-[24px] font-playfair mt-3 md:mt-4">
+                                                {product?.name}
+                                            </h1>
+                                            <h2 className="text-base md:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
+                                                ${product?.price}
+                                            </h2>
                                         </div>
-                                    </Card>
-                                    <div className="mt-4 flex-1">
-                                        <h1 className="text-lg sm:text-xl lg:text-[24px] font-playfair line-clamp-2">
-                                            {product?.name}
-                                        </h1>
-                                        <h2 className="text-base sm:text-lg lg:text-[24px] font-sans font-semibold text-[#7f7f7f]">
-                                            ${product?.price}
-                                        </h2>
-                                    </div>
+                                    </Link>
                                 </div>
                             ))
                         ) : (
@@ -520,7 +653,7 @@ const ProductPageSection = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     {/* Pagination for New Products */}
                     {getTotalPages(filteredCategorizedProducts.new) > 1 && (
                         <div className="flex justify-center items-center space-x-2 mt-8">
