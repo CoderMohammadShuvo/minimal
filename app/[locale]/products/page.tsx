@@ -10,7 +10,7 @@ import ProductPageSection from "@/components/products-section"
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-hidden">
       <Header />
       <main>
         <ProductPageSection/>
