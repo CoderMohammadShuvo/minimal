@@ -27,7 +27,7 @@ export function HeroSection() {
           Living
         </h1>
         <Link href="/products">
-            <button className="px-4 mt-8 py-2 border border-[#dedede] rounded-md flex gap-4">Choice Your Product <RightArrorwIcon/></button>
+            <button className="px-4 mt-8 py-2 border border-[#dedede] bg-[#B96F4A] text-black rounded-md flex gap-4">Choice Your Product <RightArrorwIcon/></button>
         </Link>
         </div>
         <img
